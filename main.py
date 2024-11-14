@@ -122,7 +122,6 @@ class GitVisualizer:
             }
 
         #       print(self.commits)
-        #print()
 
         if (self.commits[commit_sha]['parents'] != ''):
             for i in range(len(self.commits[commit_sha]['parents'])):
@@ -136,30 +135,17 @@ class GitVisualizer:
     def parse_tree(self, tree_sha):
         #print(tree_sha)
         self.read_object_tree(tree_sha)#.decode(errors = 'replace')
-        # print('\n',content)
-        # entries = []
-        # for line in content.splitlines():
-        #     #Разделяет строку на части, извлекая режим доступа, имя файла и sha
-        #     mode, filename, sha = line.split()[:3]
-        #     entries.append((mode, filename, sha))
-        # self.trees[tree_sha] = entries #Сохраняет информацию о дереве в словаре self.trees,
-        # # где ключом является sha дерева, а значением — список записей о файлах и поддеревьях
-        # return entries
 
     #генерация кода для визуализации
     def generate_plantuml(self):
         output = ["@startuml"]
         for commit_sha, commit in self.commits.items():
-            #output.append(f'"commit {commit_sha[:7]}" : {commit["tree"][:7]}')
             #print(output)
             for parent in commit['parents']:
                 output.append(f'"commit {parent[:7]}" --> "commit {commit_sha[:7]}"')
             output.append(f'{commit["tree"][:7]} : tree')
             output.append(f'"commit {commit_sha[:7]}" --> {commit["tree"][:7]}')
             # визуализация файловой системы
-            # if commit['tree'] in self.trees:
-            #     for mode, filename, sha in self.trees[commit['tree']]:
-            #         output.append(f"file {filename} : {sha}")
         for tree in self.blobs:
             #print(tree)
             if not f'{tree["blob"][:7]} : blob' in output:
@@ -189,20 +175,8 @@ class GitVisualizer:
         #print(plantuml_output)
         return str(plantuml_output)
 
-    # def collect_commits(self, commit_sha):
-    #     #print(commit_sha)
-    #     if commit_sha not in self.commits:
-    #         tree_sha = self.parse_commit(commit_sha)
-    #         print(self.parse_tree(tree_sha))
-    #         for parent in self.commits[commit_sha]['parents']:
-    #             self.collect_commits(parent)
-
 if __name__ == "__main__":
 
-    #print(datetime.utcfromtimestamp(1729519378).strftime('%Y-%m-%d %H:%M:%S'))
-    #print(zlib.decompress(b'01/55eb4229851634a0f03eb265b69f5a2d56f341'))
-
-    #repo_path = "../.venv/project_1"
     visualizer = GitVisualizer(repo_path, date)
     f = open(result_file,'w')
     g = visualizer.visualize()
