@@ -24,3 +24,11 @@
   • Дата коммитов в репозитории. 
 
 Все функции визуализатора зависимостей должны быть покрыты тестами. 
+
+### Результаты тестов
+
+![image](https://github.com/user-attachments/assets/859a0009-a924-4a5a-8dac-2f7c06c62bf7)
+
+### Пример работы программы
+
+![image](https://github.com/user-attachments/assets/7bebedf0-018c-45b5-bdc6-5e290ca2f63a)
